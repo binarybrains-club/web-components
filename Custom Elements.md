@@ -53,13 +53,13 @@ Los lifecycle callbacks de elementos personalizados incluyen:
 ![web-component-lifecycle](images/web-component-lifecycle.png)
 
 ```javascript
-// Create a class for the element
+// Crear una clase para el elemento
 class MyCustomElement extends HTMLElement {
-  // List of attributes that will be observed, which will trigger `attributeChangedCallback`
+  // Lista de atributos que serán observados, lo que disparará `attributeChangedCallback`
   static observedAttributes = ["color", "size"];
 
   constructor() {
-    // Always call super first in constructor
+    // Siempre llamar a super primero en el constructor
     super();
   }
 
@@ -178,7 +178,7 @@ Al callback se le pasan tres argumentos:
 - El valor anterior del atributo.
 - El nuevo valor del atributo.
 ```javascript
-// Create a class for the element
+// Crear una clase para el elemento
 class MyCustomElement extends HTMLElement {
   static observedAttributes = ["size"];
 
@@ -219,16 +219,16 @@ class MyCustomElement extends HTMLElement {
 
   set collapsed(flag) {
     if (flag) {
-      // Existence of identifier corresponds to "true"
+      // La existencia del identificador corresponde a "true"
       this._internals.states.add("hidden");
     } else {
-      // Absence of identifier corresponds to "false"
+      // La ausencia del identificador corresponde a "false"
       this._internals.states.delete("hidden");
     }
   }
 }
 
-// Register the custom element
+// Registrar el elemento personalizado
 customElements.define("my-custom-element", MyCustomElement);
 ```
 

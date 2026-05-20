@@ -24,11 +24,11 @@ class FilledCircle extends HTMLElement {
     super();
   }
   connectedCallback() {
-    // Create a shadow root
-    // The custom element itself is the shadow host
+    // Crear un shadow root
+    // El elemento personalizado mismo es el shadow host
     const shadow = this.attachShadow({ mode: "open" });
 
-    // create the internal implementation
+    // crear la implementación interna
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     const circle = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -153,12 +153,12 @@ reload.addEventListener("click", () => document.location.reload());
 > - `open`
 > ```javascript
 > element.attachShadow({ mode: "open" });
-> element.shadowRoot; // Returns a ShadowRoot object
+> element.shadowRoot; // Devuelve un objeto ShadowRoot
 > ```
 > - `closed`
 > ```javascript
 > element.attachShadow({ mode: "closed" });
-> element.shadowRoot; // Returns null
+> element.shadowRoot; // Devuelve null
 > ```
 >No debes **considerar esto un mecanismo de seguridad fuerte**, porque hay formas de evadirlo. Es más una **indicación de que la página no debería acceder** a los internos de tu árbol shadow DOM.
 # Encapsulamiento de CSS
