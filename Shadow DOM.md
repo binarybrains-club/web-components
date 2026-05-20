@@ -1,22 +1,22 @@
 #WebComponents 
 >[!NOTE]
->Shadow DOM enables to attach a DOM tree to an element, and have the internals of this tree hidden from Javascript and CSS running in the page.
+>Shadow DOM permite adjuntar un árbol DOM a un elemento, y tener los internos de este árbol ocultos del Javascript y CSS que se ejecutan en la página.
 
-*Shadow* DOM allows hidden DOM trees to be attached to elements in the regular DOM tree, this shadow DOM tree starts with a shadow root, underneath which you can attach any element, in the same way as the normal DOM
+*Shadow* DOM permite que árboles DOM ocultos se adjunten a elementos en el árbol DOM regular. Este árbol shadow DOM comienza con un shadow root, debajo del cual puedes adjuntar cualquier elemento, de la misma manera que el DOM normal.
 
 ![[shadow-dom-elements.png]]
-There are some bits of shadow DOM terminology to be aware of:
-- **Shadow host**: The regular DOM node that the shadow DOM is attached to.
-- **Shadow tree**: The DOM inside the shadow DOM.
-- **Shadow boundary**: the where the shadow DOM ends, ant the regular DOM begins.
-- **Shadow root**: The root node of the shadow tree.
+Hay algunos términos de shadow DOM que debes conocer:
+- **Shadow host**: El nodo DOM regular al que está adjunto el shadow DOM.
+- **Shadow tree**: El DOM dentro del shadow DOM.
+- **Shadow boundary**: El lugar donde termina el shadow DOM y comienza el DOM regular.
+- **Shadow root**: El nodo raíz del shadow tree.
 >[!NOTE]
->You can affect the nodes in the shadow DOM in exactly the same way as non-shadow nodes. The difference is that none of the code inside a shadow DOM can affect anything outside it, allowing for handy encapsulation.
+>Puedes afectar los nodos en el shadow DOM exactamente de la misma manera que los nodos que no son shadow. La diferencia es que ningún código dentro de un shadow DOM puede afectar nada fuera de él, permitiendo un encapsulamiento útil.
 
-## Attribute inheritance
-The shadow tree and `<slot>` elements inherit the `dir` and `lang` attributes from their shadow host.
-# Shadow DOM and custom elements
-Custom elements are implemented as a class which extends either the base `HTMLElement` or a built-in HTML element such as `HTMLParagraphElement`. Typically, the custom element itself is a shadow host, and the element creates multiple elements under that root, to provide the internal implementation of the element.
+## Herencia de atributos
+El shadow tree y los elementos `<slot>` heredan los atributos `dir` y `lang` de su shadow host.
+# Shadow DOM y elementos personalizados
+Los elementos personalizados se implementan como una clase que extiende ya sea la base `HTMLElement` o un elemento HTML integrado como `HTMLParagraphElement`. Típicamente, el elemento personalizado mismo es un shadow host, y el elemento crea múltiples elementos debajo de esa raíz, para proporcionar la implementación interna del elemento.
 
 ```javascript
 class FilledCircle extends HTMLElement {
@@ -47,26 +47,26 @@ class FilledCircle extends HTMLElement {
 customElements.define("filled-circle", FilledCircle);
 ```
 
-# Creating a shadow DOM
-## Imperatively with Javascript
-The following page contains two elements, a [`<div>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div) element with an [`id`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/id) of `"host"`, and a [`<span>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/span) element containing some text:
+# Creando un shadow DOM
+## Imperativamente con Javascript
+La siguiente página contiene dos elementos, un elemento [`<div>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div) con un [`id`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/id) de `"host"`, y un elemento [`<span>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/span) que contiene algún texto:
 ```html
 <div id="host"></div>
 <span>I'm not in the shadow DOM</span>
 ```
-We're going to use the "host" element as the shadow host. We call `attachShadow()` on the host to create the shadow DOM, and can then add nodes to the shadow DOM just like we would to the main DOM.
+Vamos a usar el elemento "host" como el shadow host. Llamamos a `attachShadow()` en el host para crear el shadow DOM, y luego podemos añadir nodos al shadow DOM como lo haríamos con el DOM principal.
 ```javascript
 const host = document.querySelector("#host");
 const shadow = host.attachShadow({ mode: "open" });
 const span = 
 ```
 
-The result looks like this:
+El resultado se ve así:
 ![[shadow-dom-imperatively.png]]
 >[!IMPORTANT]
->Creating a **shadow DOM via Javascript API** might be good option for **client-side rendered applications**.
-# Declaratively with HTML
-For other applications, a server-side rendered UI might have better performance and a better user experience. In such cases you can use the `<template>` element to declaratively define the shadow DOM. The key to this behaviour is the enumerated `shadowrootmode` attribute, which can be set either `open` or  `closed`, the same values as the mode option of [[#Imperatively with Javascript|`attachShadow()`]] method.
+>Crear un **shadow DOM mediante la API de Javascript** podría ser una buena opción para **aplicaciones renderizadas del lado del cliente**.
+# Declarativamente con HTML
+Para otras aplicaciones, una UI renderizada del lado del servidor podría tener mejor rendimiento y una mejor experiencia de usuario. En tales casos puedes usar el elemento `<template>` para definir declarativamente el shadow DOM. La clave de este comportamiento es el atributo enumerado `shadowrootmode`, que puede establecerse como `open` o `closed`, los mismos valores que la opción mode del método [[#Imperatively with Javascript|`attachShadow()`]].
 ```html
 <div id="host">
   <template shadowrootmode="open">
@@ -76,9 +76,9 @@ For other applications, a server-side rendered UI might have better performance 
 ```
 ![[shadow-dom-declaratively.png]]
 >[!NOTE]
->By default, contents of `<template>` are not displayed. In this case, because the `shadowrootmode="open"` was included, the shadow root is rendered. In supporting browsers, the visible contents within that shadow root are displayed.
+>Por defecto, los contenidos de `<template>` no se muestran. En este caso, debido a que se incluyó `shadowrootmode="open"`, el shadow root se renderiza. En navegadores compatibles, los contenidos visibles dentro de ese shadow root se muestran.
 
-After the browser parses the HTML, it replaces `<template>` element with its content wrapped in a shadow root that's attached to the parent element, the `<div id="host">` in the example. The resulting DOM tree looks like this:
+Después de que el navegador analiza el HTML, reemplaza el elemento `<template>` con su contenido envuelto en un shadow root que está adjunto al elemento padre, el `<div id="host">` en el ejemplo. El árbol DOM resultante se ve así:
 ```markdown
 - DIV id="host"
   - #shadow-root
@@ -86,8 +86,8 @@ After the browser parses the HTML, it replaces `<template>` element with its con
       - #text: I'm in the shadow DOM
 ```
 
-# Encapsulating from Javascript
-Clicking the "Uppercase span elements" button finds all `<span>` elements in the page and changes their text to uppercase. Clicking the "Reload" button just reloads the page, so you can try again.
+# Encapsulamiento de Javascript
+Al hacer clic en el botón "Uppercase span elements" se encuentran todos los elementos `<span>` en la página y se cambia su texto a mayúsculas. Al hacer clic en el botón "Reload" simplemente se recarga la página, para que puedas intentarlo de nuevo.
 ```html
 <div id="host"></div>
 <span>I'm not in the shadow DOM</span>
@@ -115,12 +115,12 @@ const reload = document.querySelector("#reload");
 reload.addEventListener("click", () => document.location.reload());
 ```
 
-If you click "Uppercase span elements", you'll see that `Document.querySelectorAll()` doesn't find the elements in our shadow DOM:
+Si haces clic en "Uppercase span elements", verás que `Document.querySelectorAll()` no encuentra los elementos en nuestro shadow DOM:
 ![[encapsulation-from-javascript.png]]
-# Element.shadowRoot and the "mode" option
-With the `mode` set to `"open"`, the Javascript in the page is able to access the internals of your shadow DOM through the `shadowRoot` property of the shadow host.
+# Element.shadowRoot y la opción "mode"
+Con `mode` establecido en `"open"`, el Javascript en la página puede acceder a los internos de tu shadow DOM a través de la propiedad `shadowRoot` del shadow host.
 
-This time the "Uppercase" button uses `shadowRoot` to find the `<span>` elements in the DOM:
+Esta vez el botón "Uppercase" usa `shadowRoot` para encontrar los elementos `<span>` en el DOM:
 ```html
 <div id="host"></div>
 <span>I'm not in the shadow DOM</span>
@@ -149,7 +149,7 @@ reload.addEventListener("click", () => document.location.reload());
 ```
 ![[Pasted image 20260101182226.png]]
 >[!NOTE]
-> The attribute `mode` is a string specifying the encapsulation mode for the shadow DOM tree. This can be one of:
+> El atributo `mode` es un string que especifica el modo de encapsulamiento para el árbol shadow DOM. Puede ser uno de:
 > - `open`
 > ```javascript
 > element.attachShadow({ mode: "open" });
@@ -160,9 +160,9 @@ reload.addEventListener("click", () => document.location.reload());
 > element.attachShadow({ mode: "closed" });
 > element.shadowRoot; // Returns null
 > ```
->You should **not consider this a strong security mechanism**, because there are ways it can be evaded. It's a more of **an indication that the page should not access** the internals of your shadow DOM tree.
-# Encapsulation from CSS
-This time, we'll have some CSS targeting `<span>` elements in the page:
+>No debes **considerar esto un mecanismo de seguridad fuerte**, porque hay formas de evadirlo. Es más una **indicación de que la página no debería acceder** a los internos de tu árbol shadow DOM.
+# Encapsulamiento de CSS
+Esta vez, tendremos algo de CSS dirigido a elementos `<span>` en la página:
 ```html
 <div id="host"></div>
 <span>I'm not in the shadow DOM</span>
@@ -180,19 +180,19 @@ span {
   border: 1px solid black;
 }
 ```
-The page CSS does not affect nodes inside the shadow DOM:
+El CSS de la página no afecta a los nodos dentro del shadow DOM:
 ![[Pasted image 20260101183538.png]]
-# Applying styles inside the shadow DOM
-There are two different ways to apply styles inside a shadow DOM tree:
-- Programatically, by constructing a `CSSStyleSheet` object and attaching it to the shadow root.
-- Declarative, by adding `<style>` element in a `<template>` element's declaration.
-In both cases, the styles defined in the shadow DOM tree are scoped to that tree.
-## Constructable stylesheets
-To style page elements in the shadow DOM with constructable stylesheets, we can:
-1. Create any empty `CSSStyleSheet` object
-2. Set its content using `CSSStyleSheet.replace()` or `CSSStyleSheet.replaceSync()`
-3. Add it to the shadow root by assigning to `ShadowRoot.adoptedStyleSheets`
-Rules defined in the `CSSStyleSheet` will be scoped to the shadow DOM tree.
+# Aplicando estilos dentro del shadow DOM
+Hay dos formas diferentes de aplicar estilos dentro de un árbol shadow DOM:
+- Programáticamente, construyendo un objeto `CSSStyleSheet` y adjuntándolo al shadow root.
+- Declarativamente, añadiendo un elemento `<style>` en la declaración de un elemento `<template>`.
+En ambos casos, los estilos definidos en el árbol shadow DOM tienen alcance limitado a ese árbol.
+## Hojas de estilo construibles (Constructable stylesheets)
+Para estilizar elementos de página en el shadow DOM con hojas de estilo construibles, podemos:
+1. Crear un objeto `CSSStyleSheet` vacío.
+2. Establecer su contenido usando `CSSStyleSheet.replace()` o `CSSStyleSheet.replaceSync()`.
+3. Añadirlo al shadow root asignándolo a `ShadowRoot.adoptedStyleSheets`.
+Las reglas definidas en el `CSSStyleSheet` tendrán alcance limitado al árbol shadow DOM.
 ```html
 <div id="host"></div>
 <span>I'm not in the shadow DOM</span>
@@ -212,12 +212,12 @@ span.textContent = "I'm in the shadow DOM";
 shadow.appendChild(span);
 ```
 
-The styles defined in the shadow DOM tree are not applied in the rest of the page:
+Los estilos definidos en el árbol shadow DOM no se aplican en el resto de la página:
 ![[Pasted image 20260101193607.png]]
-## Adding `<style>` elements in `<template>` declarations
-An alternative to constructing `CSSStyleSheet` objects is to include a `<style>` element inside the `<template>` element used to define a web component.
+## Añadiendo elementos `<style>` en declaraciones `<template>`
+Una alternativa a construir objetos `CSSStyleSheet` es incluir un elemento `<style>` dentro del elemento `<template>` usado para definir un web component.
 
-In this case the HTML includes the `<template>` declaration
+En este caso el HTML incluye la declaración `<template>`.
 ```html
 <template id="my-element">
   <style>
@@ -239,9 +239,9 @@ const template = document.getElementById("my-element");
 
 shadow.appendChild(template.content);
 ```
-Again, the styles defined in the `<template>` are applied only within the shadow DOM tree, and not in the rest of the page:
+De nuevo, los estilos definidos en el `<template>` se aplican solo dentro del árbol shadow DOM, y no en el resto de la página:
 ![[Pasted image 20260101200310.png]]
-## Choosing between programmatic and declarative options
-Creating a `CSSStyleSheet` and assigning it to the shadow root using `adoptedStyleSheets` allows you to create a single stylesheet and share it among many DOM trees. The will browser will parse that stylesheet once. Also, you can make dynamic changes to the stylesheet and have them propagate to all components that use the sheet.
+## Eligiendo entre opciones programática y declarativa
+Crear un `CSSStyleSheet` y asignarlo al shadow root usando `adoptedStyleSheets` permite crear una sola hoja de estilo y compartirla entre muchos árboles DOM. El navegador analizará esa hoja de estilo una sola vez. También puedes hacer cambios dinámicos en la hoja de estilo y hacer que se propaguen a todos los componentes que usan la hoja.
 
-The approach of attaching a `<style>` element is great if you want to be declarative, have few style, and don´t need to share style across different components.
+El enfoque de adjuntar un elemento `<style>` es excelente si quieres ser declarativo, tienes pocos estilos y no necesitas compartir estilos entre diferentes componentes.

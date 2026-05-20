@@ -1,26 +1,26 @@
 #WebComponents 
-# Type of custom element
-There are two types of custom element:
-- **Autonomous custom elements** [[Inheritance|inherits]] from the HTML element base [[Classes and Objects#Classes|class]] `HTMLElement`. You have to implement their behavior from scratch.
+# Tipo de elemento personalizado
+Hay dos tipos de elemento personalizado:
+- **Elementos personalizados autónomos** [[Inheritance|heredan]] de la clase base del elemento HTML [[Classes and Objects#Classes|class]] `HTMLElement`. Debes implementar su comportamiento desde cero.
 ```javascript
 class CustomElement extends HTMLElement{
 	// ...
 }
 ```
-- **Customized built-in elements** inherit from standard HTML elements such as `HTMLImageElement` or `HTMLParagraphElement`. Their implementation extends the behavior of select instances of the standard element.
+- **Elementos personalizados integrados mejorados** heredan de elementos HTML estándar como `HTMLImageElement` o `HTMLParagraphElement`. Su implementación extiende el comportamiento de instancias seleccionadas del elemento estándar.
 ```javascript
 class CustomImageElement extends HTMLImageElement{
 	// ...
 }
 ```
 
-For both kinds of custom element, the basic steps to create and use them are the same:
-1. Implement its behavior by defining a Javascript class.
-2. Register the custom element to the current page.
-3. Finally, you can use the custom element in the HTML or Javascript code.
-# Implementing a custom Element
+Para ambos tipos de elemento personalizado, los pasos básicos para crearlos y usarlos son los mismos:
+1. Implementar su comportamiento definiendo una clase de Javascript.
+2. Registrar el elemento personalizado en la página actual.
+3. Finalmente, se puede usar el elemento personalizado en el código HTML o Javascript.
+# Implementando un elemento personalizado
 
-Implementation of a minimal custom element that customizes the `<p>` element:
+Implementación de un elemento personalizado mínimo que personaliza el elemento `<p>`:
 ```javascript
 class WordCount extends HTMLParagraphElement {
 	constructor(){
@@ -28,7 +28,7 @@ class WordCount extends HTMLParagraphElement {
 	}
 }
 ```
-Implementation of a minimal autonomous custom element:
+Implementación de un elemento personalizado autónomo mínimo:
 ```javascript
 class PopUpInfo extends HTMLElement {
 	constructor(){
@@ -37,20 +37,20 @@ class PopUpInfo extends HTMLElement {
 }
 ```
 >[!NOTE]
->In the class `constructor`, can be set up initial state and default values, register event listeners and perhaps create a shadow root.
-## Custom element lifecycle callbacks
-Once your custom element is registered, the browser call certain methods of your class when code in the page interacts with your custom element in certain ways. By providing an implementation of these [[Classes and Objects#Defining Methods|methods]]. which the specification calls *lifecycle callbacks*, you can run code in response to these events.
+>En el `constructor` de la clase, se pueden configurar el estado inicial y los valores predeterminados, registrar event listeners y quizás crear un shadow root.
+## Ciclo de vida de los elementos personalizados (lifecycle callbacks)
+Una vez que tu elemento personalizado está registrado, el navegador llama a ciertos métodos de tu clase cuando el código en la página interactúa con tu elemento personalizado de ciertas maneras. Al proporcionar una implementación de estos [[Classes and Objects#Defining Methods|métodos]], que la especificación llama *lifecycle callbacks*, puedes ejecutar código en respuesta a estos eventos.
 
-Custom element lifecycle callbacks include:
-- `connectedCallback()`: Called each time the element is added to the document.
+Los lifecycle callbacks de elementos personalizados incluyen:
+- `connectedCallback()`: Se llama cada vez que el elemento se añade al documento.
 >[!NOTE]
->The specification recommends that developers should implement custom element setup in this callback rather than the constructor.
-- `disconnectedCallback()`: Called each time the element is removed from the document.
-- `connectedMoveCallback()`: When defined, this is called instead of `connectedCallback()` and `disconnectedCallback()` each time the element is moved to a different place in the DOM via `Element.moveBefore()`. 
+>La especificación recomienda que los desarrolladores implementen la configuración del elemento personalizado en este callback en lugar del constructor.
+- `disconnectedCallback()`: Se llama cada vez que el elemento se elimina del documento.
+- `connectedMoveCallback()`: Cuando está definido, se llama en lugar de `connectedCallback()` y `disconnectedCallback()` cada vez que el elemento se mueve a un lugar diferente en el DOM mediante `Element.moveBefore()`.
 >[!NOTE]
->Use this to avoid running initialization/cleanup code in the `connectedCallback()` and `disconnectedCallback()` callbacks when the element is not actually being added to or removed from the DOM. See [[#Lifecycle callbacks and state-preserving moves]]
-- `adoptedCallback()`: Called each time the element is moved to a new document.
--  `attributeChangedCallback()`: Called when attributes are changed, added, removed, or replaced. See [[#Responding to attribute changes]].
+>Úsalo para evitar ejecutar código de inicialización/limpieza en los callbacks `connectedCallback()` y `disconnectedCallback()` cuando el elemento no está siendo realmente añadido o eliminado del DOM. Ver [[#Lifecycle callbacks and state-preserving moves]]
+- `adoptedCallback()`: Se llama cada vez que el elemento se mueve a un nuevo documento.
+- `attributeChangedCallback()`: Se llama cuando los atributos son cambiados, añadidos, eliminados o reemplazados. Ver [[#Responding to attribute changes]].
 ![[web-component-lifecycle.png]]
 
 ```javascript
@@ -87,12 +87,12 @@ class MyCustomElement extends HTMLElement {
 
 customElements.define("my-custom-element", MyCustomElement);
 ```
-## Lifecycle callbacks and state-preserving moves
+## Lifecycle callbacks y movimientos que preservan el estado
 
-The position of a custom element in the DOM can be manipulated just like any regular HTML element, but there are lifecycle side-effects to consider.
-Each time a custom element is moved (via methods such as `Element.moveBefore()` or `Node.insertBefore()`), the `disconnectedCallback()` and `connectedCallback()` lifecycle callbacks are fired, because the element is disconnected from and reconnected to the DOM.
-If you want to preserve the element's state, you can do so by defining a `connectedMoveCallback()` lifecycle callback inside the element class, and the using the `Element.moveBefore()` method to move the element (instead of similar methods such as `Node.insertBefore()`). This causes the `connectedMoveCallback()` to run instead of `connectedCallback()` and `disconnectedCallback()`.
-You could add an empty `connectedMoveCallback()` to stop the other two callbacks running, or include some custom logic to handle the move:
+La posición de un elemento personalizado en el DOM se puede manipular igual que cualquier elemento HTML regular, pero hay efectos secundarios de ciclo de vida a considerar.
+Cada vez que un elemento personalizado se mueve (mediante métodos como `Element.moveBefore()` o `Node.insertBefore()`), se disparan los lifecycle callbacks `disconnectedCallback()` y `connectedCallback()`, porque el elemento se desconecta y reconecta del DOM.
+Si deseas preservar el estado del elemento, puedes hacerlo definiendo un lifecycle callback `connectedMoveCallback()` dentro de la clase del elemento, y luego usando el método `Element.moveBefore()` para mover el elemento (en lugar de métodos similares como `Node.insertBefore()`). Esto hace que se ejecute `connectedMoveCallback()` en lugar de `connectedCallback()` y `disconnectedCallback()`.
+Podrías añadir un `connectedMoveCallback()` vacío para evitar que los otros dos callbacks se ejecuten, o incluir alguna lógica personalizada para manejar el movimiento:
 ```javascript
 class MyComponent {
   // ...
@@ -103,16 +103,16 @@ class MyComponent {
 }
 ```
 
-# Registering a custom element
-To make a custom element available in a page, call the `define()` method of `window.customElements`.
-The `define()` method takes the following arguments:
-- `name`: Name of the element. This must start with a lowercase letter contain a hyphen, and satisfy certain other rules listed in the specification
+# Registrando un elemento personalizado
+Para hacer que un elemento personalizado esté disponible en una página, llama al método `define()` de `window.customElements`.
+El método `define()` toma los siguientes argumentos:
+- `name`: Nombre del elemento. Debe comenzar con una letra minúscula, contener un guión, y cumplir con ciertas otras reglas listadas en la especificación.
 >[!NOTE]
-> A string name is a valid custom element name if all of the following are true:
-> - *name* is a valid element local name
-> - *name*'s 0th code pount in as ASCII lower alpha
-> - *name* does not contain any ASCII upper alphas
-> - name is not one of the following ():
+> Un nombre de string es un nombre válido de elemento personalizado si todo lo siguiente es verdadero:
+> - *name* es un nombre de elemento local válido
+> - El código de punto 0 de *name* es ASCII lower alpha
+> - *name* no contiene ningún ASCII upper alpha
+> - name no es uno de los siguientes ():
 > 	- "annotation-xml"
 > 	- color-profile"
 > 	- "font-face"
@@ -121,35 +121,35 @@ The `define()` method takes the following arguments:
 > 	- "font-face-format"
 > 	- "font-face-name"
 > 	- "missing-glyph"
-> 	- ... other hyphen-containing element names from the applicable specificacions, namely SVG2 and MathML
-- `constructor`: The custom element's constructor function.
-- `options`: Only included for customized built-in elements, this is an object containing a single property a `extends`, which is a string naming the built-in element to extend
+> 	- ... otros nombres de elementos con guión de las especificaciones aplicables, namely SVG2 and MathML
+- `constructor`: La función constructora del elemento personalizado.
+- `options`: Solo se incluye para elementos personalizados integrados mejorados, es un objeto que contiene una única propiedad `extends`, que es un string que nombra el elemento integrado a extender.
 
-For example, this code registers the  `WordCount`  customized built-in element:
+Por ejemplo, este código registra el elemento personalizado integrado mejorado `WordCount`:
 ```javascript
 customElements.define("word-count", WordCount, {
 	extends: "p",
 });
 ```
 
-This code registers the `PopupInfo` autonomous custom element:
+Este código registra el elemento personalizado autónomo `PopupInfo`:
 ```javascript
 customElements.define("popup-info", PopupInfo);
 ```
-# Using a custom element
-To use a customized built-in element, use the built-in element but with the custom name as the value of the `is` attribute:
+# Usando un elemento personalizado
+Para usar un elemento personalizado integrado mejorado, usa el elemento integrado pero con el nombre personalizado como valor del atributo `is`:
 ```html
 <p is="word-count"></p>
 ```
-To use an autonomous custom element, use the custom name just like a built-in HTML element:
+Para usar un elemento personalizado autónomo, usa el nombre personalado como un elemento HTML integrado:
 ```html
 <popup-info>
   <!-- content of the element -->
 </popup-info>
 ```
-# Responding to attribute changes
-Like built-in elements, custom elements can use HTML attributes to configure the element's behavior. To use attributes effectively, an element has to be able to respond to changes in an attribute's value. To do this, a custom element needs to add the following members to the class that implements the custom element:
-- A static property named `observedAttributes`. This must be an array containing the names of all attributes for which the element needs change notifications
+# Respondiendo a cambios de atributos
+Al igual que los elementos integrados, los elementos personalizados pueden usar atributos HTML para configurar el comportamiento del elemento. Para usar atributos efectivamente, un elemento debe poder responder a cambios en el valor de un atributo. Para hacer esto, un elemento personalizado necesita añadir los siguientes miembros a la clase que implementa el elemento personalizado:
+- Una propiedad estática llamada `observedAttributes`. Debe ser un array que contenga los nombres de todos los atributos para los cuales el elemento necesita notificaciones de cambio.
 ```javascript
 class CustomElement extends HTMLElement {
 	static observedAttributes = ["size"]; 
@@ -162,7 +162,7 @@ class MyElement extends HTMLElement {
 	}
 }
 ```
-- An implementation of the `attributeChangedCallback()` lifecycle callback
+- Una implementación del lifecycle callback `attributeChangedCallback()`
 ```javascript
 class CustomElement extends HTMLElement {
 	// ...
@@ -172,12 +172,12 @@ class CustomElement extends HTMLElement {
 	}
 }
 ```
-The `attributeChangedCallback()` callback is then called whenever an attribute whose name is listed in the element's `observedAttributes` property is added, modified, removed, or replaced.
+El callback `attributeChangedCallback()` se llama cada vez que un atributo cuyo nombre está listado en la propiedad `observedAttributes` del elemento es añadido, modificado, eliminado o reemplazado.
 
-The callback is passed three arguments:
-- The name of the attribute changed.
-- The attribute's old value
-- The attribute's new value
+Al callback se le pasan tres argumentos:
+- El nombre del atributo cambiado.
+- El valor anterior del atributo.
+- El nuevo valor del atributo.
 ```javascript
 // Create a class for the element
 class MyCustomElement extends HTMLElement {
@@ -196,17 +196,17 @@ class MyCustomElement extends HTMLElement {
 
 customElements.define("my-custom-element", MyCustomElement);
 ```
-Note that if the element's HTML declaration includes an observed attribute, then `attributeChangedCallback()` will be called after the attribute is initialized, when the element's declaration is parsed for the first time. So in the following example, `attributeChangedCallback()` will be called when the DOM is parsed, even if the attribute is never changed again:
+Ten en cuenta que si la declaración HTML del elemento incluye un atributo observado, entonces `attributeChangedCallback()` se llamará después de que el atributo sea inicializado, cuando la declaración del elemento se analice por primera vez. Así que en el siguiente ejemplo, `attributeChangedCallback()` se llamará cuando el DOM sea analizado, incluso si el atributo nunca se vuelve a cambiar:
 ```html
 <my-custom-element size="100"></my-custom-element>
 ```
-## Custom states and custom state pseudo-class CSS selectors
+## Estados personalizados y selectores CSS de pseudo-clase de estado personalizado
 
-Built-in HTML elements can have different states, such as "hover", "disabled", and "read only". Some of these states can be set as attributes using HTML or Javascript, while others are internal, and cannot. Whether external or internal, commonly these states have corresponding CSS pseudo-classes that can be used to select and style the element when it is in a particular state.
+Los elementos HTML integrados pueden tener diferentes estados, como "hover", "disabled" y "read only". Algunos de estos estados se pueden establecer como atributos usando HTML o Javascript, mientras que otros son internos y no se pueden. Ya sean externos o internos, comúnmente estos estados tienen pseudo-clases CSS correspondientes que se pueden usar para seleccionar y estilizar el elemento cuando está en un estado particular.
 
-Autonomous custom elements (but not elements based on built-in elements) also allow you to define states and select against them using the `:state()` pseudo-classes function. The code below shows how this works using the example of an autonomous custom element that has an internal state `"collapsed"`.
+Los elementos personalizados autónomos (pero no los elementos basados en elementos integrados) también permiten definir estados y seleccionarlos usando la función de pseudo-clase `:state()`. El código siguiente muestra cómo funciona esto usando el ejemplo de un elemento personalizado autónomo que tiene un estado interno `"collapsed"`.
 
-The `collapsed` state is represented as a boolean property that is not visible outside of the element. To make this state selectable in CSS the custom element first calls `HTMLElement.attachInternals()` in its constructor in order to attach an [ElementInternals](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) object, which in turn provides access to a [CustomStateSet](https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet) through the `ElementInternals.state` property. The setter for the (internal) collapsed state adds the _identifier_ `hidden` to the `CustomStateSet` when the state is `true`, and removes it when the state is `false.
+El estado `collapsed` se representa como una propiedad booleana que no es visible fuera del elemento. Para hacer que este estado sea seleccionable en CSS, el elemento personalizado primero llama a `HTMLElement.attachInternals()` en su constructor para adjuntar un objeto [ElementInternals](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals), que a su vez proporciona acceso a un [CustomStateSet](https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet) a través de la propiedad `ElementInternals.state`. El setter del estado (interno) collapsed añade el _identificador_ `hidden` al `CustomStateSet` cuando el estado es `true`, y lo elimina cuando el estado es `false`.
 ```javascript
 class MyCustomElement extends HTMLElement {
   constructor() {
@@ -233,7 +233,7 @@ class MyCustomElement extends HTMLElement {
 customElements.define("my-custom-element", MyCustomElement);
 ```
 
-We can use the identifier added to the custom element's `CustomStateSet` (`this._internals.states`) for matching the element's custom state. This is matched by passing the identifier to the `:state()` pseudo-class. or example, below we select on the hidden state being true (and hence the element's collapsed state) using the `:hidden` selector, and remove the border.
+Podemos usar el identificador añadido al `CustomStateSet` del elemento personalizado (`this._internals.states`) para coincidir con el estado personalizado del elemento. Esto se empareja pasando el identificador a la pseudo-clase `:state()`. Por ejemplo, abajo seleccionamos cuando el estado hidden es true (y por lo tanto el estado collapsed del elemento) usando el selector `:hidden`, y eliminamos el borde.
 
 ```css
 my-custom-element {
@@ -243,7 +243,7 @@ my-custom-element:state(hidden) {
   border: none;
 }
 ```
-The `:state()` pseudo-class can also be used within the `:host()` pseudo-class function to match a custom state [within a custom element's shadow DOM](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:state#matching_a_custom_state_in_a_custom_elements_shadow_dom). Additionally, the `:state()` pseudo-class can be used after the [`::part()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Shadow_parts) pseudo-element to match the shadow parts of a custom element that is in particular state.
+La pseudo-clase `:state()` también se puede usar dentro de la función de pseudo-clase `:host()` para coincidir con un estado personalizado [dentro del shadow DOM de un elemento personalizado](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:state#matching_a_custom_state_in_a_custom_elements_shadow_dom). Adicionalmente, la pseudo-clase `:state()` se puede usar después del pseudo-elemento [`::part()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Shadow_parts) para coincidir con las shadow parts de un elemento personalizado que está en un estado particular.
 
 
 Check [[Shadow DOM#Applying styles inside the shadow DOM]]

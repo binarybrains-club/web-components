@@ -1,13 +1,13 @@
 #WebComponents
-It is a suite of different technologies that allows to create reusable custom elements, with their functionality encapsulated away from the rest of the code, and utilize them in web apps.
+Es un conjunto de diferentes tecnologías que permiten crear elementos personalizados reutilizables, con su funcionalidad encapsulada del resto del código, y utilizarlos en aplicaciones web.
 
-It consists of three man technologies, which can be used together to create versatile custom elements with encapsulated functionality that can be reused wherever you like without fear of code colisions.
-- [[Custom Elements]]: A set of Javascript APIs that allow you to define custom elements and their behavior, which can then be used as desired in your user interface.
-- [[Shadow DOM]]:  A set of Javascript APIs for attaching an encapsulated "shadow" DOM tree to an element, which is rendered separately from the main document DOM, and controlling associated functionality.
-- [[Templates and slots]]: The `<template>` and `<slot>`elements enable to write markup templates that are not displayed in the rendered page. These can the be reused multiple times as the basis of a custom element's structure.
+Consta de tres tecnologías principales, que pueden usarse juntas para crear elementos personalizados versátiles con funcionalidad encapsulada que pueden reutilizarse donde sea sin temor a colisiones de código.
+- [[Custom Elements]]: Un conjunto de APIs de Javascript que permiten definir elementos personalizados y su comportamiento, que luego pueden usarse según se desee en la interfaz de usuario.
+- [[Shadow DOM]]: Un conjunto de APIs de Javascript para adjuntar un árbol DOM "sombra" encapsulado a un elemento, que se renderiza por separado del DOM del documento principal, y controlar la funcionalidad asociada.
+- [[Templates and slots]]: Los elementos `<template>` y `<slot>` permiten escribir plantillas de marcado que no se muestran en la página renderizada. Estas pueden luego reutilizarse múltiples veces como base de la estructura de un elemento personalizado.
 
-The basic approach for implementing a web component generally looks something like this:
-1. Create a class in which you specify your web component functionality, using the [[Javascript Classes |class]] syntax.
-2. Register new custom element using the  `CustomElementRegistry.define()`method, passing it the element name to be defined, the class or function in which its functionality is specified, and optionally, what element it inherits from.
-3. If required, define an HTML template using `<template>` and `<slot>`. Again use regular DOM methods to clone the template and attach it to your shadow DOM.
-4. Use your custom element wherever you like on your page, just like you would any regular HTML element.
+El enfoque básico para implementar un web component generalmente se ve así:
+1. Crear una clase en la que se especifica la funcionalidad del web component, usando la sintaxis de [[Javascript Classes |clase]].
+2. Registrar un nuevo elemento personalizado usando el método `CustomElementRegistry.define()`, pasándole el nombre del elemento a definir, la clase o función en la que se especifica su funcionalidad, y opcionalmente, qué elemento hereda.
+3. Si es necesario, definir una plantilla HTML usando `<template>` y `<slot>`. De nuevo, usar métodos DOM regulares para clonar la plantilla y adjuntarla al shadow DOM.
+4. Usar el elemento personalizado donde sea en la página, como se haría con cualquier elemento HTML normal.

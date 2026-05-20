@@ -1,19 +1,19 @@
 #WebComponents 
-# The truth about templates
-When you have to reuse the same markup structures repeatedly on a web page, it makes sense to use some kind of a template rather than repeating the same structure over and over again. This is possible by the HTML `<template>` element. This element and its contents are not rendered in the DOM, but it can still be referenced using Javascript.
+# La verdad sobre las templates
+Cuando tienes que reutilizar las mismas estructuras de marcado repetidamente en una página web, tiene sentido usar algún tipo de plantilla en lugar de repetir la misma estructura una y otra vez. Esto es posible mediante el elemento HTML `<template>`. Este elemento y su contenido no se renderizan en el DOM, pero aún se puede hacer referencia a él usando Javascript.
 ```html
 <template id="custom-paragraph">
   <p>My paragraph</p>
 </template>
 ```
-This won't appear in your page until you grab a reference to it with Javascript and then append it to the DOM, using something like the followong:
+Esto no aparecerá en tu página hasta que obtengas una referencia a él con Javascript y luego lo añadas al DOM, usando algo como lo siguiente:
 ```javascript
 let template = document.getElementById("custom-paragraph");
 let templateContent = template.content;
 document.body.appendChild(templateContent);
 ```
-# Using templates with web components
-Templates are useful on their own, but they work even better with web components. Let's define a web component that uses our template as the content of its shadow DOM.
+# Usando templates con web components
+Las templates son útiles por sí solas, pero funcionan aún mejor con web components. Definamos un web component que use nuestra template como el contenido de su shadow DOM.
 ```js
 customElements.define(
   "my-paragraph",
@@ -29,9 +29,9 @@ customElements.define(
   },
 );
 ```
-The key point to note here is that we append a clone of the template content to the shadow root, created using the `Document.importNode()` method.
+El punto clave a notar aquí es que añadimos un clon del contenido de la template al shadow root, creado usando el método `Document.importNode()`.
 
-And because we are pending its contents to a shadow DOM, we can include some styling information inside the template in a `<style>` element, which is then encapsulated inside the custom element. This wouldn't work if we just appended it to the standard DOM.
+Y debido a que estamos añadiendo su contenido a un shadow DOM, podemos incluir información de estilos dentro de la template en un elemento `<style>`, que luego queda encapsulado dentro del elemento personalizado. Esto no funcionaría si simplemente lo añadiéramos al DOM estándar.
 ```html
 <template id="custom-paragraph">
   <style>
@@ -45,31 +45,31 @@ And because we are pending its contents to a shadow DOM, we can include some sty
 </template>
 ```
 
-Now we can use it by just adding it to our HTML document:
+Ahora podemos usarlo simplemente añadiéndolo a nuestro documento HTML:
 ```html
 <my-paragraph></my-paragraph>
 ```
-# Adding flexibility with slots
-We can make it possible to display different text in each element instance in a nice declarative way using the `<slot>` element.
+# Añadiendo flexibilidad con slots
+Podemos hacer posible mostrar diferente texto en cada instancia del elemento de una manera declarativa usando el elemento `<slot>`.
 
-Slot are identified by their `name` attribute, and allow you to define placeholders in your template that can be filled with any markup fragment you want when the element is used in the markup.
+Los slots se identifican por su atributo `name`, y permiten definir marcadores de posición en tu template que pueden llenarse con cualquier fragmento de marcado que quieras cuando el elemento se usa en el marcado.
 
-So, if we want to add a slot into our trivial example, we could update our template's paragraph element like this:
+Entonces, si queremos añadir un slot a nuestro ejemplo trivial, podríamos actualizar el elemento párrafo de nuestra template así:
 ```html
 <p><slot name="my-text">My default text</slot></p>
 ```
 >[!IMPORTANT]
->The `name` attribute should be unique per shadow root: if you have two slots with the same name, all of these elements with a matching `slot` attribute will be asigned to the first slot with that name.
+>El atributo `name` debe ser único por shadow root: si tienes dos slots con el mismo nombre, todos los elementos con un atributo `slot` coincidente serán asignados al primer slot con ese nombre.
 
-If the slot's content isn't defined when the element is included in the markup,or if the browser doesn't support slots, `<my-paragraph>` just contains the fallback content "My default text".
+Si el contenido del slot no está definido cuando el elemento se incluye en el marcado, o si el navegador no soporta slots, `<my-paragraph>` simplemente contiene el contenido de respaldo "My default text".
 
-To define the slot's content, we include an HTML structure inside the `<my-paragrapg>`element with a `slot` attribute whose value is equal to the name of the slot we want it to fill.
+Para definir el contenido del slot, incluimos una estructura HTML dentro del elemento `<my-paragraph>` con un atributo `slot` cuyo valor es igual al nombre del slot que queremos llenar.
 ```html
 <my-paragraph>
   <span slot="my-text">Let's have some different text!</span>
 </my-paragraph>
 ```
-or
+o
 ```html
 <my-paragraph>
   <ul slot="my-text">
@@ -79,7 +79,7 @@ or
 </my-paragraph>
 ```
 >[!NOTE]
->The `slot` attribute does not need to be unique: a `<slot>` can be filled by multiple elements that all have a matching `slot` attributes.
+>El atributo `slot` no necesita ser único: un `<slot>` puede ser llenado por múltiples elementos que todos tengan un atributo `slot` coincidente.
 >```html
 ><my-paragraph>
 >	<span slot="my-text">This will be displayed</span>
@@ -87,7 +87,7 @@ or
  ></my-paragraph>
 >```
 
-The `name` and `slot` attributes both default to the empty string, so elements with no `slot` attributes are assigned to the `<slot>`with no `name` attribute (the unnamed slot, or default slot).
+Los atributos `name` y `slot` ambos por defecto son cadena vacía, por lo que los elementos sin atributo `slot` son asignados al `<slot>` sin atributo `name` (el slot sin nombre, o slot por defecto).
 ```html
 <template id="custom-paragraph">
   <style>
@@ -110,15 +110,15 @@ The `name` and `slot` attributes both default to the empty string, so elements w
   <span>This will also go into the unnamed slot</span>
 </my-paragraph>
 ```
-In this example:
-- Content with `slot="my-text"` goes into the named slot.
-- All other content automatically goes into the unnamed slot.
-# A more involved example
+En este ejemplo:
+- El contenido con `slot="my-text"` va al slot nombrado.
+- Todo el demás contenido va automáticamente al slot sin nombre.
+# Un ejemplo más completo
 >[!NOTE]
->It it is technically possible to use `<slot>` element without a `<template>` element, e.g., within say a regular `<div>` element, and still take advantage of the place-holder features of `<slot>` for Shadow DOM content, and doing so may indeed avoid the small trouble of needing to first access the template element's content property (and clone it). However, it is generally more practical to add slots within a `<template>` element, since you are unlikely to need to define a pattern based on an already-rendered element.
->In addition, even if it is not already rendered, the purpose of the container as a template should be more semantically clear when using the [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template). In addition, [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template) can have items directly added to it, like [`<td>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/td), which would disappear when added to a [`<div>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div).
+>Técnicamente es posible usar el elemento `<slot>` sin un elemento `<template>`, por ejemplo dentro de un elemento `<div>` regular, y aún así aprovechar las características de marcador de posición de `<slot>` para contenido Shadow DOM, y hacerlo puede evitar la pequeña molestia de tener que acceder primero a la propiedad content del elemento template (y clonarlo). Sin embargo, generalmente es más práctico añadir slots dentro de un elemento `<template>`, ya que es poco probable que necesites definir un patrón basado en un elemento ya renderizado.
+>Además, incluso si no está ya renderizado, el propósito del contenedor como template debería ser semánticamente más claro cuando se usa [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template). Además, [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template) puede tener elementos directamente añadidos, como [`<td>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/td), que desaparecerían cuando se añaden a un [`<div>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div).
 
-## Creating a template with some slots
+## Creando una template con algunos slots
 ```html
 <template id="element-details-template">
   <style>
@@ -199,7 +199,7 @@ customElements.define(
   },
 );
 ```
-## Using the `<element-details>` custom element with named slots
+## Usando el elemento personalizado `<element-details>` con slots nombrados
 ```html
 <element-details>
   <span slot="element-name">slot</span>
