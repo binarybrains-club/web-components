@@ -147,7 +147,7 @@ upper.addEventListener("click", () => {
 const reload = document.querySelector("#reload");
 reload.addEventListener("click", () => document.location.reload());
 ```
-![Pasted image 20260101182226](images/Pasted%20image%2020260101182226.png)
+![shadowroot-mode](images/shadowroot-mode.png)
 >[!NOTE]
 > El atributo `mode` es un string que especifica el modo de encapsulamiento para el árbol shadow DOM. Puede ser uno de:
 > - `open`
@@ -181,7 +181,7 @@ span {
 }
 ```
 El CSS de la página no afecta a los nodos dentro del shadow DOM:
-![Pasted image 20260101183538](images/Pasted%20image%2020260101183538.png)
+![css-encapsulation](images/css-encapsulation.png)
 # Aplicando estilos dentro del shadow DOM
 Hay dos formas diferentes de aplicar estilos dentro de un árbol shadow DOM:
 - Programáticamente, construyendo un objeto `CSSStyleSheet` y adjuntándolo al shadow root.
@@ -213,7 +213,7 @@ shadow.appendChild(span);
 ```
 
 Los estilos definidos en el árbol shadow DOM no se aplican en el resto de la página:
-![Pasted image 20260101193607](images/Pasted%20image%2020260101193607.png)
+![constructable-stylesheets](images/constructable-stylesheets.png)
 ## Añadiendo elementos `<style>` en declaraciones `<template>`
 Una alternativa a construir objetos `CSSStyleSheet` es incluir un elemento `<style>` dentro del elemento `<template>` usado para definir un web component.
 
@@ -240,7 +240,7 @@ const template = document.getElementById("my-element");
 shadow.appendChild(template.content);
 ```
 De nuevo, los estilos definidos en el `<template>` se aplican solo dentro del árbol shadow DOM, y no en el resto de la página:
-![Pasted image 20260101200310](images/Pasted%20image%2020260101200310.png)
+![style-in-template](images/style-in-template.png)
 ## Eligiendo entre opciones programática y declarativa
 Crear un `CSSStyleSheet` y asignarlo al shadow root usando `adoptedStyleSheets` permite crear una sola hoja de estilo y compartirla entre muchos árboles DOM. El navegador analizará esa hoja de estilo una sola vez. También puedes hacer cambios dinámicos en la hoja de estilo y hacer que se propaguen a todos los componentes que usan la hoja.
 
