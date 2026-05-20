@@ -62,7 +62,9 @@ const span =
 ```
 
 El resultado se ve así:
+
 ![shadow-dom-imperatively](images/shadow-dom-imperatively.png)
+
 >[!IMPORTANT]
 >Crear un **shadow DOM mediante la API de Javascript** podría ser una buena opción para **aplicaciones renderizadas del lado del cliente**.
 # Declarativamente con HTML
@@ -116,7 +118,9 @@ reload.addEventListener("click", () => document.location.reload());
 ```
 
 Si haces clic en "Uppercase span elements", verás que `Document.querySelectorAll()` no encuentra los elementos en nuestro shadow DOM:
+
 ![encapsulation-from-javascript](images/encapsulation-from-javascript.png)
+
 # Element.shadowRoot y la opción "mode"
 Con `mode` establecido en `"open"`, el Javascript en la página puede acceder a los internos de tu shadow DOM a través de la propiedad `shadowRoot` del shadow host.
 
