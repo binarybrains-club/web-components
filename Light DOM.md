@@ -33,7 +33,9 @@ Imagina que el Shadow DOM es una caja cerrada con un agujero (el slot). El Light
 | Acceso         | Accesible por cualquier script global           | Privado del componente                                        |
 | Estilos        | Los estilos globales lo afectan                 | Los estilos están aislados (encapsulados)                     |
 | Definición     | Es el marcado que el usuario del componente escribe | Es la estructura interna definida por el creador del componente |
+
 **Ejemplo rápido**
+
 Si tienes un componente de calendario personalizado:
 - El Light DOM sería el texto o las etiquetas que pones entre `<my-calendar>...</my-calendar>`
 - El Shadow DOM sería toda la lógica de botones, tablas y números que el componente construye internamente para funcionar, pero que no ves en el HTML principal
