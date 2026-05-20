@@ -51,7 +51,7 @@ Los lifecycle callbacks de elementos personalizados incluyen:
 >Úsalo para evitar ejecutar código de inicialización/limpieza en los callbacks `connectedCallback()` y `disconnectedCallback()` cuando el elemento no está siendo realmente añadido o eliminado del DOM. Ver [[#Lifecycle callbacks and state-preserving moves]]
 - `adoptedCallback()`: Se llama cada vez que el elemento se mueve a un nuevo documento.
 - `attributeChangedCallback()`: Se llama cuando los atributos son cambiados, añadidos, eliminados o reemplazados. Ver [[#Responding to attribute changes]].
-![[web-component-lifecycle.png]]
+![web-component-lifecycle](images/web-component-lifecycle.png)
 
 ```javascript
 // Create a class for the element

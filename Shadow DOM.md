@@ -4,7 +4,7 @@
 
 *Shadow* DOM permite que árboles DOM ocultos se adjunten a elementos en el árbol DOM regular. Este árbol shadow DOM comienza con un shadow root, debajo del cual puedes adjuntar cualquier elemento, de la misma manera que el DOM normal.
 
-![[shadow-dom-elements.png]]
+![shadow-dom-elements](images/shadow-dom-elements.png)
 Hay algunos términos de shadow DOM que debes conocer:
 - **Shadow host**: El nodo DOM regular al que está adjunto el shadow DOM.
 - **Shadow tree**: El DOM dentro del shadow DOM.
@@ -62,7 +62,7 @@ const span =
 ```
 
 El resultado se ve así:
-![[shadow-dom-imperatively.png]]
+![shadow-dom-imperatively](images/shadow-dom-imperatively.png)
 >[!IMPORTANT]
 >Crear un **shadow DOM mediante la API de Javascript** podría ser una buena opción para **aplicaciones renderizadas del lado del cliente**.
 # Declarativamente con HTML
@@ -74,7 +74,7 @@ Para otras aplicaciones, una UI renderizada del lado del servidor podría tener 
   </template>
 </div>
 ```
-![[shadow-dom-declaratively.png]]
+![shadow-dom-declaratively](images/shadow-dom-declaratively.png)
 >[!NOTE]
 >Por defecto, los contenidos de `<template>` no se muestran. En este caso, debido a que se incluyó `shadowrootmode="open"`, el shadow root se renderiza. En navegadores compatibles, los contenidos visibles dentro de ese shadow root se muestran.
 
@@ -116,7 +116,7 @@ reload.addEventListener("click", () => document.location.reload());
 ```
 
 Si haces clic en "Uppercase span elements", verás que `Document.querySelectorAll()` no encuentra los elementos en nuestro shadow DOM:
-![[encapsulation-from-javascript.png]]
+![encapsulation-from-javascript](images/encapsulation-from-javascript.png)
 # Element.shadowRoot y la opción "mode"
 Con `mode` establecido en `"open"`, el Javascript en la página puede acceder a los internos de tu shadow DOM a través de la propiedad `shadowRoot` del shadow host.
 
@@ -147,7 +147,7 @@ upper.addEventListener("click", () => {
 const reload = document.querySelector("#reload");
 reload.addEventListener("click", () => document.location.reload());
 ```
-![[Pasted image 20260101182226.png]]
+![Pasted image 20260101182226](images/Pasted%20image%2020260101182226.png)
 >[!NOTE]
 > El atributo `mode` es un string que especifica el modo de encapsulamiento para el árbol shadow DOM. Puede ser uno de:
 > - `open`
@@ -181,7 +181,7 @@ span {
 }
 ```
 El CSS de la página no afecta a los nodos dentro del shadow DOM:
-![[Pasted image 20260101183538.png]]
+![Pasted image 20260101183538](images/Pasted%20image%2020260101183538.png)
 # Aplicando estilos dentro del shadow DOM
 Hay dos formas diferentes de aplicar estilos dentro de un árbol shadow DOM:
 - Programáticamente, construyendo un objeto `CSSStyleSheet` y adjuntándolo al shadow root.
@@ -213,7 +213,7 @@ shadow.appendChild(span);
 ```
 
 Los estilos definidos en el árbol shadow DOM no se aplican en el resto de la página:
-![[Pasted image 20260101193607.png]]
+![Pasted image 20260101193607](images/Pasted%20image%2020260101193607.png)
 ## Añadiendo elementos `<style>` en declaraciones `<template>`
 Una alternativa a construir objetos `CSSStyleSheet` es incluir un elemento `<style>` dentro del elemento `<template>` usado para definir un web component.
 
@@ -240,7 +240,7 @@ const template = document.getElementById("my-element");
 shadow.appendChild(template.content);
 ```
 De nuevo, los estilos definidos en el `<template>` se aplican solo dentro del árbol shadow DOM, y no en el resto de la página:
-![[Pasted image 20260101200310.png]]
+![Pasted image 20260101200310](images/Pasted%20image%2020260101200310.png)
 ## Eligiendo entre opciones programática y declarativa
 Crear un `CSSStyleSheet` y asignarlo al shadow root usando `adoptedStyleSheets` permite crear una sola hoja de estilo y compartirla entre muchos árboles DOM. El navegador analizará esa hoja de estilo una sola vez. También puedes hacer cambios dinámicos en la hoja de estilo y hacer que se propaguen a todos los componentes que usan la hoja.
 
