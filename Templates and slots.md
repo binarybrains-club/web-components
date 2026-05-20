@@ -1,4 +1,3 @@
-#WebComponents 
 # La verdad sobre las templates
 Cuando tienes que reutilizar las mismas estructuras de marcado repetidamente en una página web, tiene sentido usar algún tipo de plantilla en lugar de repetir la misma estructura una y otra vez. Esto es posible mediante el elemento HTML `<template>`. Este elemento y su contenido no se renderizan en el DOM, pero aún se puede hacer referencia a él usando Javascript.
 ```html

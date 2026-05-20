@@ -1,4 +1,4 @@
-#WebComponents 
+# Shadow DOM
 >[!NOTE]
 >Shadow DOM permite adjuntar un árbol DOM a un elemento, y tener los internos de este árbol ocultos del Javascript y CSS que se ejecutan en la página.
 
