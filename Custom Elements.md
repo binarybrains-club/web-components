@@ -1,7 +1,7 @@
 #WebComponents 
 # Tipo de elemento personalizado
 Hay dos tipos de elemento personalizado:
-- **Elementos personalizados autónomos** [[Inheritance|heredan]] de la clase base del elemento HTML [[Classes and Objects#Classes|class]] `HTMLElement`. Debes implementar su comportamiento desde cero.
+- **Elementos personalizados autónomos** heredan de la clase base del elemento HTML class `HTMLElement`. Debes implementar su comportamiento desde cero.
 ```javascript
 class CustomElement extends HTMLElement{
 	// ...
@@ -39,7 +39,7 @@ class PopUpInfo extends HTMLElement {
 >[!NOTE]
 >En el `constructor` de la clase, se pueden configurar el estado inicial y los valores predeterminados, registrar event listeners y quizás crear un shadow root.
 ## Ciclo de vida de los elementos personalizados (lifecycle callbacks)
-Una vez que tu elemento personalizado está registrado, el navegador llama a ciertos métodos de tu clase cuando el código en la página interactúa con tu elemento personalizado de ciertas maneras. Al proporcionar una implementación de estos [[Classes and Objects#Defining Methods|métodos]], que la especificación llama *lifecycle callbacks*, puedes ejecutar código en respuesta a estos eventos.
+Una vez que tu elemento personalizado está registrado, el navegador llama a ciertos métodos de tu clase cuando el código en la página interactúa con tu elemento personalizado de ciertas maneras. Al proporcionar una implementación de estos métodos, que la especificación llama *lifecycle callbacks*, puedes ejecutar código en respuesta a estos eventos.
 
 Los lifecycle callbacks de elementos personalizados incluyen:
 - `connectedCallback()`: Se llama cada vez que el elemento se añade al documento.
@@ -48,9 +48,9 @@ Los lifecycle callbacks de elementos personalizados incluyen:
 - `disconnectedCallback()`: Se llama cada vez que el elemento se elimina del documento.
 - `connectedMoveCallback()`: Cuando está definido, se llama en lugar de `connectedCallback()` y `disconnectedCallback()` cada vez que el elemento se mueve a un lugar diferente en el DOM mediante `Element.moveBefore()`.
 >[!NOTE]
->Úsalo para evitar ejecutar código de inicialización/limpieza en los callbacks `connectedCallback()` y `disconnectedCallback()` cuando el elemento no está siendo realmente añadido o eliminado del DOM. Ver [[#Lifecycle callbacks and state-preserving moves]]
+>Úsalo para evitar ejecutar código de inicialización/limpieza en los callbacks `connectedCallback()` y `disconnectedCallback()` cuando el elemento no está siendo realmente añadido o eliminado del DOM. Ver Lifecycle callbacks and state-preserving moves
 - `adoptedCallback()`: Se llama cada vez que el elemento se mueve a un nuevo documento.
-- `attributeChangedCallback()`: Se llama cuando los atributos son cambiados, añadidos, eliminados o reemplazados. Ver [[#Responding to attribute changes]].
+- `attributeChangedCallback()`: Se llama cuando los atributos son cambiados, añadidos, eliminados o reemplazados. Ver Responding to attribute changes.
 ![web-component-lifecycle](images/web-component-lifecycle.png)
 
 ```javascript
@@ -246,7 +246,7 @@ my-custom-element:state(hidden) {
 La pseudo-clase `:state()` también se puede usar dentro de la función de pseudo-clase `:host()` para coincidir con un estado personalizado [dentro del shadow DOM de un elemento personalizado](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:state#matching_a_custom_state_in_a_custom_elements_shadow_dom). Adicionalmente, la pseudo-clase `:state()` se puede usar después del pseudo-elemento [`::part()`](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Shadow_parts) para coincidir con las shadow parts de un elemento personalizado que está en un estado particular.
 
 
-Check [[Shadow DOM#Applying styles inside the shadow DOM]]
+Check Shadow DOM#Applying styles inside the shadow DOM
 ```typescript
 export class CustomElement extends HTMLElement {
   _internals;

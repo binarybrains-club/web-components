@@ -1,5 +1,5 @@
 # ¿Por qué se llama "Light DOM"?
-Antes de que existieran los [[Web Components]], solo existía el DOM. Pero cuando se introdujo el concepto de [[Shadow DOM]], se necesitó una forma de referirse a los elementos fuera de ese túnel.
+Antes de que existieran los Web Components, solo existía el DOM. Pero cuando se introdujo el concepto de Shadow DOM, se necesitó una forma de referirse a los elementos fuera de ese túnel.
 - **Light DOM**: Es el DOM tradicional. Son los nodos que escribes dentro de una etiqueta HTML estándar o los hijos de un componente que son visibles para el navegador globalmente.
 - **Shadow DOM**: Es el DOM privado de un componente. No es accesible desde fuera usando selectores globales como `document.querySelector`, lo que evita que los estilos CSS se "filtren" hacia adentro o hacia afuera.
 
@@ -10,7 +10,7 @@ Significa que el navegador los trata como "hijos" directos del componente en el 
 - **CSS global**: Si tienes alguna regla en tu archivo CSS general que diga `p { color: red; }`, afectará a esos elementos, incluso si están "dentro" del componente.
 - **Eventos**: Los eventos (como un `click`) que ocurren en esos elementos burbujean hasta `window` naturalmente.
 
-Para que esos elementos del Light DOM sean visibles dentro de tu componente, el Web Component debe usar una etiqueta llamada [[Templates and slots#Adding flexibility with slots|`<slot>`]].
+Para que esos elementos del Light DOM sean visibles dentro de tu componente, el Web Component debe usar una etiqueta llamada `<slot>`.
 
 Imagina que el Shadow DOM es una caja cerrada con un agujero (el slot). El Light DOM es un objeto que colocas fuera de la caja, pero que se asoma a través de ese agujero. El objeto sigue estando "afuera" (es globalmente accesible), pero visualmente parece estar dentro de la caja.
 

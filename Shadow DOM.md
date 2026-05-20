@@ -66,7 +66,7 @@ El resultado se ve así:
 >[!IMPORTANT]
 >Crear un **shadow DOM mediante la API de Javascript** podría ser una buena opción para **aplicaciones renderizadas del lado del cliente**.
 # Declarativamente con HTML
-Para otras aplicaciones, una UI renderizada del lado del servidor podría tener mejor rendimiento y una mejor experiencia de usuario. En tales casos puedes usar el elemento `<template>` para definir declarativamente el shadow DOM. La clave de este comportamiento es el atributo enumerado `shadowrootmode`, que puede establecerse como `open` o `closed`, los mismos valores que la opción mode del método [[#Imperatively with Javascript|`attachShadow()`]].
+Para otras aplicaciones, una UI renderizada del lado del servidor podría tener mejor rendimiento y una mejor experiencia de usuario. En tales casos puedes usar el elemento `<template>` para definir declarativamente el shadow DOM. La clave de este comportamiento es el atributo enumerado `shadowrootmode`, que puede establecerse como `open` o `closed`, los mismos valores que la opción mode del método `attachShadow()`.
 ```html
 <div id="host">
   <template shadowrootmode="open">
