@@ -1,5 +1,4 @@
-#WebComponents 
-# Tipo de elemento personalizado
+# Tipo de elemento personalizado (Custom Element)
 Hay dos tipos de elemento personalizado:
 - **Elementos personalizados autónomos** heredan de la clase base del elemento HTML class `HTMLElement`. Debes implementar su comportamiento desde cero.
 ```javascript

@@ -1,4 +1,4 @@
-#WebComponents
+# WebComponents
 Es un conjunto de diferentes tecnologías que permiten crear elementos personalizados reutilizables, con su funcionalidad encapsulada del resto del código, y utilizarlos en aplicaciones web.
 
 Consta de tres tecnologías principales, que pueden usarse juntas para crear elementos personalizados versátiles con funcionalidad encapsulada que pueden reutilizarse donde sea sin temor a colisiones de código.
